@@ -2,30 +2,49 @@ name: Build and Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main  # Запуск при пуше в main
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout репозитория
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Установка Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: "yarn"
+          node-version: 20
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Установка зависимостей
+        run: npm install
 
-      - name: Build application
-        run: yarn build:win
+      - name: Сборка Electron-приложения
+        run: npm run build
 
-      - name: Publish release
+      - name: Автоматическое создание версии
+        run: |
+          git fetch --tags
+          VERSION=$(git rev-parse --short HEAD)  # Используем хеш коммита как версию
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Запуск electron-builder
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: yarn electron-builder --win --publish always
+        run: npx electron-builder --win --publish always
+
+      - name: Создание релиза на GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+          files: |
+            dist/*.exe
+            dist/*.zip
+            dist/latest.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

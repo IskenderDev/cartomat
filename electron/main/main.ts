@@ -1,8 +1,7 @@
-import { app, BrowserWindow, ipcMain } from "electron";
-import { autoUpdater } from "electron-updater"; 
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { autoUpdater } from "electron-updater";
 import path from "node:path";
 import dotenv from "dotenv";
-import log from "electron-log";
 
 dotenv.config();
 
@@ -13,7 +12,7 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1080,
     height: 1920,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     kiosk: true,
     fullscreen: true,
     frame: false,
@@ -33,42 +32,46 @@ function createWindow() {
   }
 
   win.webContents.openDevTools();
-  
-  autoUpdater.checkForUpdatesAndNotify();
+
+  setupAutoUpdater()
 }
+function setupAutoUpdater(): void {
+  autoUpdater.on('checking-for-update', () => {
+    console.log('Проверка наличия обновлений...')
+  })
 
+  autoUpdater.on('update-available', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Обновление доступно',
+      message: 'Доступна новая версия. Загрузка...'
+    })
+  })
 
-// Логирование обновлений
-autoUpdater.logger = log;
-log.transports.file.level = "info";
+  autoUpdater.on('update-not-available', () => {
+    console.log('Обновлений нет.')
+  })
 
-autoUpdater.on("checking-for-update", () => {
-  log.info("Проверка обновлений...");
-  win?.webContents.send("update-status", { message: "Проверка обновлений..." });
-});
+  autoUpdater.on('update-downloaded', () => {
+    dialog
+      .showMessageBox({
+        type: 'info',
+        title: 'Обновление загружено',
+        message: 'Приложение обновлено. Перезапустить сейчас?',
+        buttons: ['Да', 'Позже']
+      })
+      .then((result) => {
+        if (result.response === 0) {
+          autoUpdater.quitAndInstall(true, true);  
+        }
+      })
+  });
+  autoUpdater.on('error', (err) => {
+    console.error('Ошибка автообновления:', err)
+  })
 
-autoUpdater.on("update-available", (info) => {
-  log.info(`Доступно обновление: ${info.version}`);
-  win?.webContents.send("update-status", { message: `Доступно обновление: ${info.version}` });
-});
-
-autoUpdater.on("update-not-available", () => {
-  log.info("Обновлений нет.");
-  win?.webContents.send("update-status", { message: "Обновлений нет." });
-});
-
-autoUpdater.on("error", (err) => {
-  log.error(`Ошибка обновления: ${err}`);
-  win?.webContents.send("update-status", { message: `Ошибка обновления: ${err.message}` });
-});
-
-autoUpdater.on("update-downloaded", () => {
-  log.info("Обновление загружено, устанавливаем...");
-  win?.webContents.send("update-status", { message: "Обновление загружено, устанавливаем..." });
-  
-  // Показываем модальное окно с кнопкой "Перезагрузить"
-  win?.webContents.send("update-downloaded");
-});
+  autoUpdater.checkForUpdatesAndNotify()
+}
 
 app.whenReady().then(createWindow);
 
