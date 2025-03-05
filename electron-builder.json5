@@ -9,6 +9,13 @@
   directories: {
     output: "release/${version}",
   },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "IskenderDev",
+      "repo": "cartomat",
+    }
+  ],
   files: ["dist", "dist-electron"],
   mac: {
     target: ["dmg"],

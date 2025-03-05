@@ -1,35 +1,15 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import { autoUpdater } from "electron-updater"; 
 import path from "node:path";
-import { machineIdSync } from "node-machine-id";
 import dotenv from "dotenv";
 import log from "electron-log";
 
-// The built directory structure
-// ├─┬─┬ dist
-// │ │ └── index.html
-// │ │
-// │ ├─┬ dist-electron
-// │ │ ├── main.js
-// │ │ └── preload.js
-
 dotenv.config();
-process.env.DIST = path.join(__dirname, "../dist");
-process.env.VITE_PUBLIC = app.isPackaged
-  ? process.env.DIST
-  : path.join(process.env.DIST, "../public");
 
 let win: BrowserWindow | null;
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 function createWindow() {
-  if (!process.env.MBANK_SERVICE_URL || !process.env.CARD_MACHINE_URL) {
-    win?.webContents.send(
-      "error-message",
-      "Не установлены необходимые переменные окружения"
-    );
-  }
-
   win = new BrowserWindow({
     width: 1080,
     height: 1920,
@@ -37,54 +17,61 @@ function createWindow() {
     kiosk: true,
     fullscreen: true,
     frame: false,
-    icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+    icon: path.join(__dirname, "../public/electron-vite.svg"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
-      devTools: !!VITE_DEV_SERVER_URL,
       nodeIntegration: true,
       contextIsolation: true,
       webSecurity: true,
-      allowRunningInsecureContent: false,
-      javascript: true,
-      nodeIntegrationInSubFrames: true,
     },
   });
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL);
   } else {
-    win.loadFile(path.join(process.env.DIST, "index.html"));
+    win.loadFile(path.join(__dirname, "../dist/index.html"));
   }
 
   win.webContents.openDevTools();
+  
   autoUpdater.checkForUpdatesAndNotify();
 }
+
+
+// Логирование обновлений
 autoUpdater.logger = log;
 log.transports.file.level = "info";
+
 autoUpdater.on("checking-for-update", () => {
   log.info("Проверка обновлений...");
+  win?.webContents.send("update-status", { message: "Проверка обновлений..." });
 });
 
 autoUpdater.on("update-available", (info) => {
-  log.info("Доступно обновление:", info.version);
+  log.info(`Доступно обновление: ${info.version}`);
+  win?.webContents.send("update-status", { message: `Доступно обновление: ${info.version}` });
 });
 
 autoUpdater.on("update-not-available", () => {
   log.info("Обновлений нет.");
+  win?.webContents.send("update-status", { message: "Обновлений нет." });
 });
 
 autoUpdater.on("error", (err) => {
-  log.error("Ошибка обновления:", err);
+  log.error(`Ошибка обновления: ${err}`);
+  win?.webContents.send("update-status", { message: `Ошибка обновления: ${err.message}` });
 });
 
 autoUpdater.on("update-downloaded", () => {
   log.info("Обновление загружено, устанавливаем...");
-  autoUpdater.quitAndInstall();
+  win?.webContents.send("update-status", { message: "Обновление загружено, устанавливаем..." });
+  
+  // Показываем модальное окно с кнопкой "Перезагрузить"
+  win?.webContents.send("update-downloaded");
 });
+
 app.whenReady().then(createWindow);
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -92,9 +79,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-// This identifier is unique to the machine and is used for device initialization.
-const machineId = machineIdSync().slice(0, 50);
-
-ipcMain.handle("local-machine-id", () => machineId);
-
-app.whenReady().then(createWindow);
+// Обработчик запроса на установку обновления
+ipcMain.on("install-update", () => {
+  autoUpdater.quitAndInstall();
+});

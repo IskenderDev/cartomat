@@ -40,7 +40,7 @@ export const Welcome = () => {
   return (
     <div className={styles.container}>
       <div>
-        <p className={styles.title}>MBANK JUNIOR</p>
+        <p className={styles.title}>MBANK JUNIsOR 0</p>
         <p className={styles.subTitle}>{t("get_card")}</p>
       </div>
 

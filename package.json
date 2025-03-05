@@ -10,16 +10,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "build": {
-  "publish": [
-    {
-      "provider": "github",
-      "owner": "IskenderDev",
-      "repo": "cartomat"
-    }
-  ]
-}
-,
+  
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "axios": "^1.7.9",
