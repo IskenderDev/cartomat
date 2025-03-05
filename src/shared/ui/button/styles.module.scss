@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0px 71.467px 142.933px 0px rgba(51, 44, 9, 0.24);
+
+  .white {
+    color: $BLACK;
+    background-color: rgba(var(--chage-black-white), 1);
+  }
+
+  .orange {
+    background: $ORANGE;
+    color: $BLACK;
+  }
+
+  .yellow {
+    background: var(--gradient-yellow);
+    color: $BLACK;
+  }
+
+  .button {
+    @extend .extra-bold-44;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    height: 110px;
+    cursor: pointer;
+  }
+}

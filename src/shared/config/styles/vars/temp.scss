@@ -1,0 +1,11 @@
+@import "colors";
+@import "fonts";
+@import "typography";
+@import "themes";
+
+$PADDING_BOTTOM: 150px;
+$BORDER_RADIUS: 40px;
+
+$MAX_HEIGHT: 100vh;
+$GREEN_SHADOW: drop-shadow(-10px 0px 50px rgba(1, 154, 98, 0.5));
+$GOLDEN_SHADOW: 0px 5.641px 112.811px 0px rgba(250, 191, 0, 0.11);

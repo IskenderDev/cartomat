@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+  box-sizing: border-box;
+
+  height: 80vh;
+  align-items: center;
+
+  border-radius: $BORDER_RADIUS;
+  background: $DARK_GREY;
+  box-shadow: $GOLDEN_SHADOW;
+  backdrop-filter: blur(12px);
+
+  .loader {
+    position: absolute;
+    top: 0;
+  }
+
+  .text {
+    position: absolute;
+    bottom: 3%;
+    text-align: center;
+
+    h1 {
+      @extend .bold-70;
+      color: rgba(var(--color-white), 1);
+      margin: 0;
+      text-transform: uppercase;
+    }
+  }
+}

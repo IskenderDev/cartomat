@@ -1,0 +1,21 @@
+.container {
+  position: relative;
+  white-space: pre-line;
+
+  .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 300px;
+  }
+
+  h3 {
+    @extend .bold-60;
+    color: $WHITE;
+    text-align: center;
+  }
+}

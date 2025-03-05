@@ -1,0 +1,27 @@
+.backPage {
+  position: fixed;
+}
+.container {
+  display: flex;
+  justify-content: center; 
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 10px 100px;
+  height: calc(100vh - 390px);
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.loading {
+  text-align: center;
+  color: white;
+  font-size: 70px;
+}
+.modalTitle {
+  font-size: 42px;
+  font-weight: 800;
+}
+.modalDis {
+  font-size: 28px;
+  font-weight: 500;
+}

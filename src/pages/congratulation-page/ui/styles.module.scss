@@ -1,0 +1,121 @@
+.container {
+  padding-top: 35%;
+
+  .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .header {
+      margin-bottom: 120px;
+      height: 200px;
+
+      .subTitle {
+        @extend .medium-50;
+        color: var(--color-text);
+        text-align: center;
+        margin: 0 0 23px;
+        animation: textAnim 5s infinite;
+        text-transform: uppercase;
+      }
+
+      .title {
+        @extend .bold-94;
+        margin: 0;
+        color: var(--color-text);
+        text-transform: uppercase;
+        text-align: center;
+        animation: textAnim 5s infinite;
+      }
+    }
+
+    .card {
+      margin-bottom: 230px;
+      height: 460px;
+
+      img {
+        animation: image 5s infinite;
+      }
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 350px;
+
+      .title {
+        @extend .medium-50;
+        color: var(--color-text);
+        text-align: center;
+        margin: 0 0 50px;
+        text-transform: uppercase;
+      }
+
+      img {
+        animation: jump 3s infinite;
+      }
+    }
+  }
+}
+
+@keyframes textAnim {
+  0% {
+    transform: rotateX(-100deg);
+    transform-origin: top;
+    opacity: 0;
+  }
+  30% {
+    transform:rotateX(0deg);
+    transform-origin:top;
+    opacity:1;
+  }
+}
+
+
+@keyframes jump {
+  25% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  75% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes image {
+  0% {
+    transform: scale(.4);
+    animation-timing-function: ease-in;
+  }
+  20% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  30% {
+    transform: scale(.7);
+    animation-timing-function: ease-in;
+  }
+  40% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  60% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  80% {
+    transform: scale(1);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: scale(.4);
+    animation-timing-function: ease-in;
+  }
+}

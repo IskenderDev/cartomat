@@ -1,0 +1,17 @@
+.container {
+  .subTitle {
+    @extend .medium-50;
+    color: rgba(var(--color-grey-white), 1);
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 16px;
+  }
+
+  .title {
+    @extend .bold-94;
+    color: var(--color-text);
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 0 60px;
+  }
+}

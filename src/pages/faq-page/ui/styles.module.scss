@@ -1,0 +1,20 @@
+.FAQPage {
+  background:
+    url("../../../shared/assets/icons/QuestionMark1.svg") no-repeat,
+    url("../../../shared/assets/icons/QuestionMark2.svg") no-repeat;
+  background-size: auto, auto;
+  background-position:
+    700px 100px,
+    0 250px;
+  .title {
+    margin: 0 auto 50px;
+    max-width: 660px;
+    display: flex;
+    flex-direction: column;
+    .titleText {
+      text-align: center;
+      color: white;
+      font-size: 70px;
+    }
+  }
+}

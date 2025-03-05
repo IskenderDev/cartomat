@@ -1,0 +1,43 @@
+@mixin title {
+  color: $BLACK_2;
+  text-align: center;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 200px 90px 180px;
+
+  .title {
+    color: $BLACK_2;
+    text-align: center;
+    margin: 0;
+    font-size: 102px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .subTitle {
+    @extend .medium-50;
+    color: $BLACK_2;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+.footer {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.videoWrapper {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}

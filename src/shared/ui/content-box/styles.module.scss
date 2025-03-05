@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 800px);
+  margin: 320px auto;
+  width: fit-content;
+
+  .header {
+    @extend .extra-bold-70;
+    text-align: center;
+    color: $WHITE;
+  }
+
+  .body {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer {
+    align-self: flex-end;
+    margin-top: auto;
+  }
+}

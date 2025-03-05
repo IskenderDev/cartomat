@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 54px;
+  }
+
+  .text {
+    @extend .semi-bold-75;
+    color: rgba(var(--chage-black-white), 1);
+    line-height: 100px;
+    letter-spacing: -0.24px;
+    text-align: center;
+    margin: 0;
+  }
+
+  .description {
+    @extend .regular-44;
+    text-align: center;
+    color: rgba(var(--color-grey), 1);
+    margin: 30px 0 0 0;
+  }
+}

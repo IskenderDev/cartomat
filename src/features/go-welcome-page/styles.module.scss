@@ -1,0 +1,19 @@
+.container {
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .timer {
+    position: absolute;
+    color: $WHITE;
+    @extend .medium-32;
+
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 10px;
+  }
+}

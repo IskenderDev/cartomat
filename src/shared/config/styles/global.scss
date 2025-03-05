@@ -1,0 +1,63 @@
+@import "./vars/temp";
+
+*:not(input, textarea) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+  font-family:
+    Nunito Sans,
+    sans-serif;
+  touch-action: pan-y;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+        circle,
+        rgba(0, 123, 130, 0.6) 20%,
+        rgba(0, 123, 130, 0) 70%
+      )
+      no-repeat,
+    #009c4d;
+
+  background-size: 100% 300%;
+  animation: wave-animation 6s infinite ease-in-out;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+button {
+  font-family:
+    Nunito Sans,
+    sans-serif;
+}
+
+textarea,
+input {
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 80px;
+  height: 100vh;
+}
+
+:root {
+  --screen_height: 1920px;
+  --screen_width: 1080px;
+  --app-padding: 80px;
+}

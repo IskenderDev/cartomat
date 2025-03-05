@@ -1,0 +1,45 @@
+@keyframes wave-animation {
+  0% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+body {
+  --color-green: 1, 154, 98;
+  --color-white: 255, 255, 255;
+  --color-grey-white: 183, 183, 183;
+  --color-grey: 116, 116, 116;
+
+  --shadow-silver-green: 40px 3px 124px 0px rgba(18, 18, 18, 0.1);
+
+  --color-text: #ffffff;
+  --chage-white-black: 62, 62, 62;
+  --chage-black-white: 255, 255, 255;
+  --chage-green-white: 1, 154, 98;
+
+  --gradient-yellow: linear-gradient(
+      265deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0) 99.9%
+    ),
+    #fddb2b;
+}
+
+body.white {
+  --shadow-silver-green: 40px 3px 124px 0px rgba(18, 18, 18, 0.1);
+
+  --color-text: #000000;
+  --chage-white-black: 255, 255, 255;
+  --chage-black-white: 0, 0, 0;
+  --chage-green-white: 255, 255, 255;
+}
+
+:root {
+  --shadow-green: drop-shadow(-10px 0px 50px rgba(1, 154, 98, 0.5));
+}

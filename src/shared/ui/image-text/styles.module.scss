@@ -1,0 +1,16 @@
+.container {
+  .image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 54px;
+  }
+
+  .text {
+    @extend .semi-bold-75;
+    color: rgba(var(--chage-black-white), 1);
+    line-height: 100px;
+    letter-spacing: -0.24px;
+    text-align: center;
+    margin: 0;
+  }
+}

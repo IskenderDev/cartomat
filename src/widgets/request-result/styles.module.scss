@@ -1,0 +1,18 @@
+.container {
+  height: $MAX_HEIGHT;
+  position: relative;
+}
+
+.header {
+  margin-bottom: 30%;
+}
+
+.img {
+  filter: $GREEN_SHADOW;
+}
+
+.wrapperBtn {
+  position: absolute;
+  bottom: $PADDING_BOTTOM;
+  width: calc(100% - 100px);
+}
