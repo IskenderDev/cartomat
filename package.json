@@ -11,13 +11,15 @@
     "preview": "vite preview"
   },
   "build": {
-    "publish": [
-      {
-        "provider": "generic",
-        "url": "https://gitlab.com/your-repo/your-project/-/jobs/artifacts/main/raw/releases/latest?job=build"
-      }
-    ]
-  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "IskenderDev",
+      "repo": "cartomat"
+    }
+  ]
+}
+,
   "dependencies": {
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "axios": "^1.7.9",
