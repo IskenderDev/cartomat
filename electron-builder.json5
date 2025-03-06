@@ -16,7 +16,7 @@
       "repo": "cartomat",
     }
   ],
-  files: ["dist", "dist-electron", "package.json"],
+  files: ["dist", "dist-electron"],
   mac: {
     target: ["dmg"],
     artifactName: "${productName}-Mac-${version}-Installer.${ext}",

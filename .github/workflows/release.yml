@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Установка зависимостей
-        run: npm install
+        run: yarn install
         shell: pwsh
 
       - name: Получение версии из package.json
@@ -59,8 +59,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            release/*.exe
-            release/latest.yml
-            release/*.exe.blockmap
+            dist/*.exe
+            dist/latest.yml
+            dist/*.exe.blockmap
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
