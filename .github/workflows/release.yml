@@ -10,6 +10,17 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Проверка GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "GH_TOKEN не установлен!"
+            exit 1
+          else
+            echo "GH_TOKEN установлен."
+          fi
+
       - name: Checkout репозитория
         uses: actions/checkout@v4
 
@@ -21,14 +32,23 @@ jobs:
       - name: Установка зависимостей
         run: npm install
 
-      - name: Сборка Electron-приложения
-        run: npm run build
+      - name: Получение версии из package.json
+        id: package_version
+        run: echo "VERSION=$(node -p 'require(\"./package.json\").version')" >> $GITHUB_ENV
 
-      - name: Автоматическое создание версии
+      - name: Проверка существующего тега
         run: |
-          git fetch --tags
-          VERSION=$(git rev-parse --short HEAD)  # Используем хеш коммита как версию
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          if git rev-parse "refs/tags/${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "Тег уже существует. Прерываем процесс."
+            exit 1
+          fi
+
+      - name: Создание и пуш тега
+        run: |
+          git tag ${{ env.VERSION }}
+          git push origin ${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Запуск electron-builder
         env:
@@ -43,8 +63,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            dist/*.exe
-            dist/*.zip
-            dist/latest.yml
+            release/*.exe
+            release/latest.yml
+            release/*.exe.blockmap
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
