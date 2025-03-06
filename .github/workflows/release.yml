@@ -10,18 +10,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Проверка GH_TOKEN
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        shell: pwsh
-        run: |
-          if (-not $env:GH_TOKEN) {
-            Write-Host "GH_TOKEN не установлен!"
-            exit 1
-          } else {
-            Write-Host "GH_TOKEN установлен."
-          }
-
       - name: Checkout репозитория
         uses: actions/checkout@v4
 
@@ -56,8 +44,6 @@ jobs:
 
           git tag ${{ env.VERSION }}
           git push origin ${{ env.VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Запуск electron-builder
         shell: pwsh
