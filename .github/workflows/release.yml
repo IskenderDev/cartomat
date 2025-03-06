@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - main  # Запуск при пуше в main
+      - main  
 
 jobs:
   build:
@@ -41,18 +41,19 @@ jobs:
           $version = (Get-Content package.json | ConvertFrom-Json).version
           echo "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-      - name: Проверка существующего тега
-        shell: pwsh
-        run: |
-          $tagExists = git tag --list "${{ env.VERSION }}"
-          if ($tagExists) {
-            Write-Host "Тег уже существует. Прерываем процесс."
-            exit 1
-          }
-
       - name: Создание и пуш тега
         shell: pwsh
         run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/IskenderDev/cartomat.git
+
+          $tagExists = git tag --list "${{ env.VERSION }}"
+          if ($tagExists) {
+            Write-Host "Тег ${{ env.VERSION }} уже существует. Прерываем процесс."
+            exit 1
+          }
+
           git tag ${{ env.VERSION }}
           git push origin ${{ env.VERSION }}
         env:
